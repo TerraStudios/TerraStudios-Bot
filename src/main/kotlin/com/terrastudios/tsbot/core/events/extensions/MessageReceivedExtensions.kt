@@ -13,6 +13,11 @@ fun MessageReceivedEvent.reply(message: String, success: Consumer<in Message> = 
     this.message.channel.sendMessage(message).queue(success, error)
 }
 
+fun Message.edit(newMessage: MessageEmbed, success: Consumer<in Message> = Consumer { }, error: Consumer<in Throwable> = Consumer { }) {
+    this.editMessage(newMessage).queue(success, error)
+}
+
+
 fun Message.edit(newMessage: String, success: Consumer<in Message> = Consumer { }, error: Consumer<in Throwable> = Consumer { }) {
     this.editMessage(newMessage).queue(success, error)
 }
