@@ -40,3 +40,4 @@ hs_err_pid*
 
 # Build folder
 build
+src/main/resources/config.json
