@@ -1,0 +1,32 @@
+plugins {
+    id 'application'
+    id 'org.jetbrains.kotlin.jvm' version '1.3.61'
+    id 'com.github.johnrengelman.shadow' version '5.2.0'
+}
+
+group 'com.terrastudios.tsbot'
+version '1.0-SNAPSHOT'
+
+mainClassName = "com.yerrastudios.tsbot.TSBot"
+
+def jdaVersion = '4.2.0_168'
+
+sourceCompatibility = targetCompatibility = 1.8
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    compile "net.dv8tion:JDA:$jdaVersion"
+    compile "org.slf4j:slf4j-api:1.7.5"
+    compile "org.slf4j:slf4j-log4j12:1.7.5"
+    compile "org.reflections:reflections:0.9.12"
+    compile "com.beust:klaxon:5.0.1"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+}
+
+
+
+compileJava.options.encoding = 'UTF-8'
