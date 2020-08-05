@@ -2,7 +2,10 @@ package com.terrastudios.tsbot.core.commands
 
 import com.terrastudios.tsbot.TSBot
 import com.terrastudios.tsbot.core.commands.annotations.DiscordCommand
+import com.terrastudios.tsbot.core.events.CommandEvent
 import com.terrastudios.tsbot.core.events.extensions.reply
+import com.terrastudios.tsbot.core.util.MessageType
+import com.terrastudios.tsbot.core.util.extensions.EmbedFactory
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
@@ -19,9 +22,11 @@ class CommandHandler : ListenerAdapter() {
 
     init {
         println("Starting annotation scanning..")
-        val reflections = Reflections(ConfigurationBuilder()
-            .setUrls(ClasspathHelper.forJavaClassPath())
-            .setScanners(MethodAnnotationsScanner()))
+        val reflections = Reflections(
+            ConfigurationBuilder()
+                .setUrls(ClasspathHelper.forJavaClassPath())
+                .setScanners(MethodAnnotationsScanner())
+        )
 
         val methods = reflections.getMethodsAnnotatedWith(DiscordCommand::class.java)
         println("Done! Found ${methods.size} DiscordCommand annotations.")
@@ -40,13 +45,26 @@ class CommandHandler : ListenerAdapter() {
         if (event.message.contentRaw.startsWith(TSBot.config.prefix)) {
 
             val command = event.message.contentRaw.replace("+", "").split(" ")[0]
+            val args: Array<String> =
+                event.message.contentRaw.split(" ").stream().skip(1).toArray { size -> arrayOfNulls<String>(size) }
 
             if (commandMap.containsKey(command)) {
-                val perm = commandMap[command]!!.getAnnotation(DiscordCommand::class.java).permission
+                val anno = commandMap[command]!!.getAnnotation(DiscordCommand::class.java)
+                val perm = anno.permission
+                val minArgs = commandMap[command]!!.getAnnotation(DiscordCommand::class.java).minArgs
+                val maxArgs = commandMap[command]!!.getAnnotation(DiscordCommand::class.java).maxArgs
 
                 if (perm == Permission.UNKNOWN || event.member!!.hasPermission(perm)) {
-                    val instance = commandMap[command]!!.declaringClass.newInstance()
-                    commandMap[command]!!.invoke(instance, event)
+                    if (minArgs == -1 || args.size >= minArgs) {
+                        if (maxArgs == -1 || args.size <= maxArgs) {
+                            val instance = commandMap[command]!!.declaringClass.newInstance()
+                            commandMap[command]!!.invoke(instance, CommandEvent(event, args))
+                        } else {
+                            event.reply(EmbedFactory.getEmbed(MessageType.ERROR, ":x: Too many arguments", "Usage: ${TSBot.config.prefix}${anno.usage}"))
+                        }
+                    } else {
+                        event.reply(EmbedFactory.getEmbed(MessageType.ERROR, ":x: Too few arguments", "Usage: ${TSBot.config.prefix}${anno.usage}"))
+                    }
                 } else {
                     event.reply("You don't have permission to execute that command!")
                 }

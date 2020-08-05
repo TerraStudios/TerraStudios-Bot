@@ -1,19 +1,18 @@
 package com.terrastudios.tsbot.commands
 
 import com.terrastudios.tsbot.core.commands.annotations.DiscordCommand
+import com.terrastudios.tsbot.core.events.CommandEvent
 import com.terrastudios.tsbot.core.events.extensions.edit
-import com.terrastudios.tsbot.core.events.extensions.reply
 import com.terrastudios.tsbot.core.util.MessageType
 import com.terrastudios.tsbot.core.util.extensions.EmbedFactory
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import java.time.temporal.ChronoUnit
 import java.util.function.Consumer
 
 
 class PingCommand {
 
-    @DiscordCommand(commandName = "ping", description = "Returns the current latency of the bot.")
-    fun onMessageReceived(event: MessageReceivedEvent) {
+    @DiscordCommand(commandName = "ping", description = "Returns the current latency of the bot.", usage = "ping", maxArgs = 0)
+    fun onMessageReceived(event: CommandEvent) {
         event.reply(
             EmbedFactory.getEmbed(MessageType.INFO, "Pong!", ""),
             Consumer {
