@@ -7,7 +7,7 @@ plugins {
 group 'com.terrastudios.tsbot'
 version '1.0-SNAPSHOT'
 
-mainClassName = "com.yerrastudios.tsbot.TSBot"
+mainClassName = "com.terrastudios.tsbot.TSBot"
 
 def jdaVersion = '4.2.0_168'
 
