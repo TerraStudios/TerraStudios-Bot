@@ -82,7 +82,7 @@ class TimeCommand {
                 )
             )
         } else {
-            command.reply(EmbedFactory.getEmbed(MessageType.ERROR, "Invalid User", "That user doesn't exist!"))
+            command.reply(EmbedFactory.getEmbed(MessageType.ERROR, "Invalid User", "That user doesn't have a timezone assigned!"))
         }
     }
 
