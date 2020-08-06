@@ -1,6 +1,5 @@
 package com.terrastudios.tsbot.commands
 
-import com.sun.javaws.exceptions.InvalidArgumentException
 import com.terrastudios.tsbot.core.commands.annotations.DiscordCommand
 import com.terrastudios.tsbot.core.events.CommandEvent
 import com.terrastudios.tsbot.core.util.MessageType
