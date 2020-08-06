@@ -20,6 +20,9 @@ import java.util.*
 class CommandHandler : ListenerAdapter() {
     private val commandMap = HashMap<String, Method>()
 
+    //Caches objects per class to keep member variables
+    private val cachedClasses = HashMap<Class<*>, Any>()
+
     init {
         println("Starting annotation scanning..")
         val reflections = Reflections(
@@ -57,7 +60,14 @@ class CommandHandler : ListenerAdapter() {
                 if (perm == Permission.UNKNOWN || event.member!!.hasPermission(perm)) {
                     if (minArgs == -1 || args.size >= minArgs) {
                         if (maxArgs == -1 || args.size <= maxArgs) {
-                            val instance = commandMap[command]!!.declaringClass.newInstance()
+
+                            val clazz = commandMap[command]!!.declaringClass
+
+                            if (!cachedClasses.containsKey(clazz)) {
+                                cachedClasses[clazz] = clazz.newInstance()
+                            }
+
+                            val instance = cachedClasses[clazz]
                             commandMap[command]!!.invoke(instance, CommandEvent(event, args))
                         } else {
                             event.reply(EmbedFactory.getEmbed(MessageType.ERROR, ":x: Too many arguments", "Usage: ${TSBot.config.prefix}${anno.usage}"))
