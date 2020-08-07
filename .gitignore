@@ -42,3 +42,4 @@ hs_err_pid*
 build
 src/main/resources/config.json
 src/main/resources/timezones.json
+src/main/resources/customcommands.json
