@@ -47,7 +47,7 @@ class CommandHandler : ListenerAdapter() {
 
         if (event.message.contentRaw.startsWith(TSBot.config.prefix)) {
 
-            val command = event.message.contentRaw.replace("+", "").split(" ")[0]
+            val command = event.message.contentRaw.substring(1).split(" ")[0]
             val args: Array<String> =
                 event.message.contentRaw.split(" ").stream().skip(1).toArray { size -> arrayOfNulls<String>(size) }
 
@@ -70,14 +70,16 @@ class CommandHandler : ListenerAdapter() {
                             val instance = cachedClasses[clazz]
                             commandMap[command]!!.invoke(instance, CommandEvent(event, args))
                         } else {
-                            event.reply(EmbedFactory.getEmbed(MessageType.ERROR, ":x: Too many arguments", "Usage: ${TSBot.config.prefix}${anno.usage}"))
+                            event.reply(EmbedFactory.getEmbed(MessageType.ERROR, "Too many arguments", "Usage: ${TSBot.config.prefix}${anno.usage}"))
                         }
                     } else {
-                        event.reply(EmbedFactory.getEmbed(MessageType.ERROR, ":x: Too few arguments", "Usage: ${TSBot.config.prefix}${anno.usage}"))
+                        event.reply(EmbedFactory.getEmbed(MessageType.ERROR, "Too few arguments", "Usage: ${TSBot.config.prefix}${anno.usage}"))
                     }
                 } else {
                     event.reply("You don't have permission to execute that command!")
                 }
+            } else {
+                event.reply(EmbedFactory.getEmbed(MessageType.ERROR, "Unknown command", "Type `${TSBot.config.prefix}commands` for a list of commands."))
             }
         }
     }
