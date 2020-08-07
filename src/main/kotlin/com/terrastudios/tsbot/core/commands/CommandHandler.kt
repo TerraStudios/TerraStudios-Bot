@@ -87,7 +87,7 @@ class CommandHandler : ListenerAdapter() {
                         event.reply(EmbedFactory.getEmbed(MessageType.ERROR, "Too few arguments", "Usage: ${TSBot.config.prefix}${anno.usage}"))
                     }
                 } else {
-                    event.reply("You don't have permission to execute that command!")
+                    event.reply(EmbedFactory.getEmbed(MessageType.ERROR, "Invalid Permissions", "You don't have permission to execute that command!"))
                 }
             } else {
                 if (customCommands.containsKey(command)) {
