@@ -18,7 +18,7 @@ import java.lang.reflect.Method
 import java.util.*
 
 class CommandHandler : ListenerAdapter() {
-    private val commandMap = HashMap<String, Method>()
+    val commandMap = HashMap<String, Method>()
 
     //Caches objects per class to keep member variables
     private val cachedClasses = HashMap<Class<*>, Any>()

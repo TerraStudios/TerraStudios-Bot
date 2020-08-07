@@ -14,18 +14,20 @@ class TSBot() {
 
     companion object {
         lateinit var config : BotConfig
+        lateinit var commandHandler: CommandHandler
         lateinit var api : JDA
     }
 
     init {
         config = ResourceUtils.getResource("/config.json")
         api = JDABuilder.createDefault(config.token).build()
+        commandHandler = CommandHandler()
 
         registerEvents()
     }
 
     private fun registerEvents() {
-        api.addEventListener(CommandHandler())
+        api.addEventListener(commandHandler)
     }
 }
 

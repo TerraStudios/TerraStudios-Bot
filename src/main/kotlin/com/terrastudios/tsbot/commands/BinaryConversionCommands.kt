@@ -12,12 +12,12 @@ import java.lang.IllegalArgumentException
 
 class BinaryConversionCommands {
 
-    @DiscordCommand(commandName = "texttobinary", usage = "texttobinary <text>", minArgs = 1)
+    @DiscordCommand(commandName = "texttobinary", description = "Converts text into base2 (binary).", usage = "texttobinary <text>", minArgs = 1)
     fun textToBinary(event: CommandEvent) {
         event.reply(EmbedFactory.getEmbed(MessageType.SUCCESS, "Converted Text", event.args.joinToString(" ").toBinary()))
     }
 
-    @DiscordCommand(commandName = "binarytotext", usage = "binarytotext <binary>")
+    @DiscordCommand(commandName = "binarytotext", description = "Converts base2 (binary) into text.", usage = "binarytotext <binary>")
     fun binaryToText(event: CommandEvent) {
         try {
             event.reply(

@@ -10,7 +10,7 @@ import java.util.stream.Collectors
 
 class InfoCommand {
 
-    @DiscordCommand(commandName = "info", usage = "info", minArgs = 0, maxArgs = 0)
+    @DiscordCommand(commandName = "info", description = "Displays information about the server", usage = "info", minArgs = 0, maxArgs = 0)
     fun info(event : CommandEvent) {
 
         val roles = event.message.guild.roles

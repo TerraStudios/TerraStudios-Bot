@@ -43,7 +43,7 @@ class TimeCommand {
 
     }
 
-    @DiscordCommand(commandName = "addtime", usage = "addtime <name> <timezone>", minArgs = 2, maxArgs = 2)
+    @DiscordCommand(commandName = "addtime", description = "Adds a user timezone (supports abbreviations and worldapi).", usage = "addtime <name> <timezone>", minArgs = 2, maxArgs = 2)
     fun addTime(command: CommandEvent) {
         val timezone = TimeZone.getTimeZone(command.args[1])
 
@@ -70,7 +70,7 @@ class TimeCommand {
 
     }
 
-    @DiscordCommand(commandName = "time", usage = "time <name>", minArgs = 1, maxArgs = 1)
+    @DiscordCommand(commandName = "time", description = "Displays the time of a user in military time.", usage = "time <name>", minArgs = 1, maxArgs = 1)
     fun time(command: CommandEvent) {
         if (data.containsKey(command.args[0])) {
             val cal = Calendar.getInstance(data[command.args[0]])
