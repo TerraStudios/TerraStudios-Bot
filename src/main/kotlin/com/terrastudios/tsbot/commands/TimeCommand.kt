@@ -59,7 +59,7 @@ class TimeCommand {
             val timezone = ZoneId.of(command.args[1])
 
             println("setting ${command.args[0]}")
-            data[command.args[0]] = timezone
+            data[command.args[0].toLowerCase()] = timezone
             command.reply(
                 MessageType.SUCCESS,
                 "Success",
@@ -86,9 +86,9 @@ class TimeCommand {
         maxArgs = 1
     )
     fun time(command: CommandEvent) {
-        if (data.containsKey(command.args[0])) {
+        if (data.containsKey(command.args[0].toLowerCase())) {
             try {
-                val cal = ZonedDateTime.now(data[command.args[0]])
+                val cal = ZonedDateTime.now(data[command.args[0].toLowerCase()])
                 val format = DateTimeFormatter.ofPattern("HH:mm")
                 command.reply(
                     MessageType.INFO, "Time for ${command.args[0]}",

@@ -12,6 +12,7 @@ class EmbedFactory {
             var embedTitle = title
 
             if (type == MessageType.ERROR) embedTitle = ":x: $title"
+            if (type == MessageType.WARNING) embedTitle = ":warning: $title"
 
             return EmbedBuilder()
                 .setTitle(embedTitle)
