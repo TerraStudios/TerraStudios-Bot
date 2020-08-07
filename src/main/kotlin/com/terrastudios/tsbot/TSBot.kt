@@ -21,7 +21,7 @@ class TSBot() {
     init {
         config = ResourceUtils.getResource("/config.json")
         api = JDABuilder.createDefault(config.token).build()
-        commandHandler = CommandHandler()
+        CommandHandler()
 
         registerEvents()
     }

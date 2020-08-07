@@ -11,7 +11,12 @@ import java.util.function.Consumer
 
 class PingCommand {
 
-    @DiscordCommand(commandName = "ping", description = "Returns the current latency of the bot.", usage = "ping", maxArgs = 0)
+    @DiscordCommand(
+        commandName = "ping",
+        description = "Returns the current latency of the bot.",
+        usage = "ping",
+        maxArgs = 0
+    )
     fun onMessageReceived(event: CommandEvent) {
         event.reply(
             EmbedFactory.getEmbed(MessageType.INFO, "Pong!", ""),

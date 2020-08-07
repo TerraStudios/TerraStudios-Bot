@@ -2,10 +2,12 @@ package com.terrastudios.tsbot.core.commands
 
 import com.terrastudios.tsbot.TSBot
 import com.terrastudios.tsbot.core.commands.annotations.DiscordCommand
+import com.terrastudios.tsbot.core.data.CustomCommand
 import com.terrastudios.tsbot.core.events.CommandEvent
 import com.terrastudios.tsbot.core.events.extensions.reply
 import com.terrastudios.tsbot.core.util.MessageType
 import com.terrastudios.tsbot.core.util.extensions.EmbedFactory
+import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
@@ -23,7 +25,10 @@ class CommandHandler : ListenerAdapter() {
     //Caches objects per class to keep member variables
     private val cachedClasses = HashMap<Class<*>, Any>()
 
+    val customCommands = HashMap<String, CustomCommand>()
+
     init {
+        TSBot.commandHandler = this
         println("Starting annotation scanning..")
         val reflections = Reflections(
             ConfigurationBuilder()
@@ -39,6 +44,12 @@ class CommandHandler : ListenerAdapter() {
             val annotation = it.getAnnotation(DiscordCommand::class.java)
 
             commandMap[annotation.commandName] = it
+
+            if (!cachedClasses.containsKey(it.declaringClass)) {
+                cachedClasses[it.declaringClass] = it.declaringClass.newInstance()
+            }
+
+            annotation.aliases.forEach { alias -> commandMap[alias] = it }
         }
     }
 
@@ -79,7 +90,22 @@ class CommandHandler : ListenerAdapter() {
                     event.reply("You don't have permission to execute that command!")
                 }
             } else {
-                event.reply(EmbedFactory.getEmbed(MessageType.ERROR, "Unknown command", "Type `${TSBot.config.prefix}commands` for a list of commands."))
+                if (customCommands.containsKey(command)) {
+                    try {
+                        val customCommand = customCommands[command]!!
+                        val embedBuilder = EmbedBuilder()
+                            .setTitle(if (customCommand.title == "") " " else customCommand.title)
+                            .setColor(customCommand.color.getColor())
+                        if (customCommand.text != "") embedBuilder.setDescription(customCommand.text)
+                        if (customCommand.imageURL != "") embedBuilder.setImage(customCommand.imageURL)
+
+                        event.reply(embedBuilder.build())
+                    } catch (e : Exception) {
+                        e.printStackTrace()
+                    }
+                } else {
+                    event.reply(EmbedFactory.getEmbed(MessageType.ERROR, "Unknown command", "Type `${TSBot.config.prefix}commands` for a list of commands."))
+                }
             }
         }
     }

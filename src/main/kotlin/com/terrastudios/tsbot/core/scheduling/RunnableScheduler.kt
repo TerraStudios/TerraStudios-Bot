@@ -2,7 +2,6 @@ package com.terrastudios.tsbot.core.scheduling
 
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
-import java.util.function.Consumer
 
 class RunnableScheduler private constructor(
     private val consumer: Runnable,
@@ -23,33 +22,35 @@ class RunnableScheduler private constructor(
         )
     }
 
-    companion object {
-        class Builder(private val consumer: Runnable) {
 
-            private var delay: Int = 0
-            private var delayUnit: TimeUnit = TimeUnit.SECONDS
-            private var period: Int = 0
-            private var periodUnit: TimeUnit = TimeUnit.SECONDS
+    class Builder(private val consumer: Runnable) {
 
-            fun every(period: Int, unit: TimeUnit) {
-                this.period = period
-                this.periodUnit = unit
-            }
+        private var delay: Int = 0
+        private var delayUnit: TimeUnit = TimeUnit.SECONDS
+        private var period: Int = 0
+        private var periodUnit: TimeUnit = TimeUnit.SECONDS
 
-            fun after(delay: Int, unit: TimeUnit) {
-                this.delay = delay
-                this.delayUnit = unit
-            }
+        fun every(period: Int, unit: TimeUnit): Builder {
+            this.period = period
+            this.periodUnit = unit
+            return this
+        }
 
-            fun build(): RunnableScheduler {
-                return RunnableScheduler(consumer, delay, delayUnit, period, periodUnit)
+        fun after(delay: Int, unit: TimeUnit): Builder {
+            this.delay = delay
+            this.delayUnit = unit
+            return this
+        }
 
-
-            }
+        fun build(): RunnableScheduler {
+            return RunnableScheduler(consumer, delay, delayUnit, period, periodUnit)
 
 
         }
+
+
     }
+
 
     fun start() {
 

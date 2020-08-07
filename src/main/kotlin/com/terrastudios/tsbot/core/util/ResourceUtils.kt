@@ -16,7 +16,7 @@ class ResourceUtils {
         }
 
         inline fun <reified T> getResourceArray(path: String): List<T> {
-            return Klaxon().parseArray<T>(T::class.java.getResource(path).readText())!!
+            return Klaxon().parseArray(T::class.java.getResource(path).readText())!!
         }
 
         fun getFilePath(path: String): String {
