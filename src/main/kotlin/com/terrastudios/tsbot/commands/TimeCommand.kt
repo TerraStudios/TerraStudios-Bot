@@ -4,7 +4,6 @@ import com.terrastudios.tsbot.core.commands.annotations.DiscordCommand
 import com.terrastudios.tsbot.core.events.CommandEvent
 import com.terrastudios.tsbot.core.util.MessageType
 import com.terrastudios.tsbot.core.util.ResourceUtils
-import com.terrastudios.tsbot.core.util.extensions.EmbedFactory
 import org.json.simple.JSONObject
 import java.io.FileWriter
 import java.text.SimpleDateFormat
@@ -43,46 +42,60 @@ class TimeCommand {
 
     }
 
-    @DiscordCommand(commandName = "addtime", description = "Adds a user timezone (supports abbreviations and worldapi).", usage = "addtime <name> <timezone>", minArgs = 2, maxArgs = 2)
+    @DiscordCommand(
+        commandName = "addtime",
+        description = "Adds a user timezone (supports abbreviations and worldapi).",
+        usage = "addtime <name> <timezone>",
+        minArgs = 2,
+        maxArgs = 2
+    )
     fun addTime(command: CommandEvent) {
         val timezone = TimeZone.getTimeZone(command.args[1])
 
         if (timezone == null) {
             command.reply(
-                EmbedFactory.getEmbed(
-                    MessageType.ERROR,
-                    "Invalid TimeZone",
-                    "Please specify a correct timezone."
-                )
+                MessageType.ERROR,
+                "Invalid TimeZone",
+                "Please specify a correct timezone."
+
             )
         } else {
             println("setting ${command.args[0]}")
             data[command.args[0]] = timezone
             command.reply(
-                EmbedFactory.getEmbed(
-                    MessageType.SUCCESS,
-                    "Success",
-                    "Added timezone ${timezone.displayName} to ${command.args[0]}."
-                )
+                MessageType.SUCCESS,
+                "Success",
+                "Added timezone ${timezone.displayName} to ${command.args[0]}."
+
             )
         }
 
 
     }
 
-    @DiscordCommand(commandName = "time", description = "Displays the time of a user in military time.", usage = "time <name>", minArgs = 1, maxArgs = 1)
+    @DiscordCommand(
+        commandName = "time",
+        description = "Displays the time of a user in military time.",
+        usage = "time <name>",
+        minArgs = 1,
+        maxArgs = 1
+    )
     fun time(command: CommandEvent) {
         if (data.containsKey(command.args[0])) {
             val cal = Calendar.getInstance(data[command.args[0]])
             val format = SimpleDateFormat("HH:mm")
             command.reply(
-                EmbedFactory.getEmbed(
-                    MessageType.INFO, "Time for ${command.args[0]}",
-                    format.format(cal.time).toString()
-                )
+                MessageType.INFO, "Time for ${command.args[0]}",
+                format.format(cal.time).toString()
+
             )
         } else {
-            command.reply(EmbedFactory.getEmbed(MessageType.ERROR, "Invalid User", "That user doesn't have a timezone assigned!"))
+            command.reply(
+                MessageType.ERROR,
+                "Invalid User",
+                "That user doesn't have a timezone assigned!"
+                
+            )
         }
     }
 

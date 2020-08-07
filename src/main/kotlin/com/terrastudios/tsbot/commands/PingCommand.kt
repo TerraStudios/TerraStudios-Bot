@@ -19,7 +19,7 @@ class PingCommand {
     )
     fun onMessageReceived(event: CommandEvent) {
         event.reply(
-            EmbedFactory.getEmbed(MessageType.INFO, "Pong!", ""),
+            MessageType.INFO, "Pong!", "",
             Consumer {
                 val ping = event.message.timeCreated.until(it.timeCreated, ChronoUnit.MILLIS)
                 it.edit(

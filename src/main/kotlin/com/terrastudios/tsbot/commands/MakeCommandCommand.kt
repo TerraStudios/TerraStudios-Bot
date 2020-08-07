@@ -20,17 +20,13 @@ import java.util.concurrent.TimeUnit
 class MakeCommandCommand {
 
     init {
-        println("Attempting to load...")
 
         try {
             val parsedObjects = ResourceUtils.getResourceArray<CustomCommand>("/customcommands.json")
 
-            println("Finished loading")
-
             parsedObjects.forEach { TSBot.commandHandler.customCommands[it.name] = it }
 
             RunnableScheduler.Builder(Runnable {
-                println("Looping..")
                 val json = Klaxon().toJsonString(TSBot.commandHandler.customCommands.values)
 
                 val writer = FileWriter(ResourceUtils.getFilePath("/customcommands.json"))

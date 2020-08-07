@@ -10,6 +10,6 @@ import java.util.stream.Collectors
 class CommandsCommand {
     @DiscordCommand("commands", description = "Lists all of the commands for the bot.", usage = "commands")
     fun commands(event : CommandEvent) {
-        event.reply(EmbedFactory.getEmbed(MessageType.INFO, "Commands", "`${TSBot.commandHandler.commandMap.keys.stream().collect(Collectors.joining("`, `"))}`"))
+        event.reply(MessageType.INFO, "Commands", "`${TSBot.commandHandler.commandMap.keys.stream().collect(Collectors.joining("`, `"))}`")
     }
 }

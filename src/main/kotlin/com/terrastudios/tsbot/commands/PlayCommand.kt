@@ -14,6 +14,6 @@ class PlayCommand {
         maxArgs = 0
     )
     fun play(event: CommandEvent) {
-        event.reply(EmbedFactory.getEmbed(MessageType.INFO, "Play", "haha play command go brr"))
+        event.reply(MessageType.INFO, "Play", "haha play command go brr")
     }
 }

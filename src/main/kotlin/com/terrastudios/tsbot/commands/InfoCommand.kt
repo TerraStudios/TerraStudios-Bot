@@ -16,11 +16,11 @@ class InfoCommand {
         val roles = event.message.guild.roles
         val together = roles.stream().map(Role::getName).collect(Collectors.joining("`, `"))
 
-        event.reply(EmbedFactory.getEmbed(MessageType.INFO,
+        event.reply(MessageType.INFO,
         "Server Statistics",
         "**Member Count**: ${event.message.guild.memberCount}\n\n" +
              "**Channel Count**: ${event.message.guild.channels.size}\n\n" +
-             "**Role List:** `${together}`"))
+             "**Role List:** `${together}`")
     }
 
 
