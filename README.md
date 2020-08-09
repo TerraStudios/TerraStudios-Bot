@@ -12,7 +12,6 @@ The following steps are needed in order to properly setup the bot:
 - A <code>timezones.json</code> file needs to be created containing <code>{}</code> for JSON storage
 
 # Commands
-
 |    Command Name     |                         Description                         |                                    Usage                                     |
 |:-------------------:|:-----------------------------------------------------------:|:----------------------------------------------------------------------------:|
 |        play         |    Sends a DM to the user about how to access the game.     |                                     play                                     |
@@ -30,7 +29,9 @@ The following steps are needed in order to properly setup the bot:
 |     makecommand     |   Makes a command that will embed a message on execution.   |                          makecommand <command-name>                          |
 |       addtime       | Adds a user timezone (supports abbreviations and worldapi). |                          addtime <name> <timezone>                           |
 |     makecommand     |   Makes a command that will embed a message on execution.   |                          makecommand <command-name>                          |
+|      sendembed      |    Sends an embed to a specified channel on the server.     |                                  sendembed                                   |
 |     makecommand     |   Makes a command that will embed a message on execution.   |                          makecommand <command-name>                          |
 |        time         |        Displays the time of a user in military time.        |                                 time <name>                                  |
 |      commands       |           Lists all of the commands for the bot.            |                                   commands                                   |
 |        info         |            Displays information about the server            |                                     info                                     |
+
