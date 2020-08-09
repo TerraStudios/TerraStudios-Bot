@@ -1,6 +1,5 @@
 package com.terrastudios.tsbot.core.events.listener
 
-import com.terrastudios.tsbot.TSBot
 import com.terrastudios.tsbot.core.data.ClassStorage
 import com.terrastudios.tsbot.core.events.MessageEvent
 import net.dv8tion.jda.api.events.GenericEvent
@@ -19,8 +18,6 @@ class EventListener : ListenerAdapter() {
     inline fun <reified T> listen(noinline condition: (T) -> Boolean, noinline action: (T) -> Unit) where T : GenericEvent {
         try {
             val clazz = T::class.java
-
-            println("class is ${clazz.name}")
 
             listeners.computeIfAbsent(clazz) { HashSet() }
 
@@ -43,7 +40,6 @@ class EventListener : ListenerAdapter() {
             var foundEvent = event //set to var for access
 
             if (event is MessageReceivedEvent) {
-                println("it is indeed")
                 foundEvent = MessageEvent(this, event)
             }
 

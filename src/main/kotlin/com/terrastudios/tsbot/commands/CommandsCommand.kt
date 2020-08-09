@@ -4,7 +4,6 @@ import com.terrastudios.tsbot.TSBot
 import com.terrastudios.tsbot.core.commands.annotations.DiscordCommand
 import com.terrastudios.tsbot.core.events.CommandEvent
 import com.terrastudios.tsbot.core.util.MessageType
-import com.terrastudios.tsbot.core.util.extensions.EmbedFactory
 import java.util.stream.Collectors
 
 class CommandsCommand {

@@ -11,7 +11,7 @@ fun main() {
     TSBot()
 }
 
-class TSBot() {
+class TSBot {
 
     companion object {
         lateinit var config: BotConfig
