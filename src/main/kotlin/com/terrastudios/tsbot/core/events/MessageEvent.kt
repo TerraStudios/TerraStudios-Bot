@@ -17,24 +17,24 @@ open class MessageEvent(val listener: EventListener, val messageReceivedEvent : 
     val author = messageReceivedEvent.author
     val jda = messageReceivedEvent.jda
 
-    fun reply(message: MessageEmbed, success: Consumer<in Message> = Consumer { }, error: Consumer<in Throwable> = Consumer { }) {
-        messageReceivedEvent.message.channel.sendMessage(message).queue(success, error)
+    fun reply(message: MessageEmbed, success: (Message) -> Unit = { }, error: (Throwable) -> Unit = { }) {
+        messageReceivedEvent.message.channel.sendMessage(message).queue(Consumer(success), Consumer(error))
     }
 
-    fun reply(message: String, success: Consumer<in Message> = Consumer { }, error: Consumer<in Throwable> = Consumer { }) {
-        messageReceivedEvent.message.channel.sendMessage(message).queue(success, error)
+    fun reply(message: String, success: (Message) -> Unit = { }, error:(Throwable) -> Unit = { }) {
+        messageReceivedEvent.message.channel.sendMessage(message).queue(Consumer(success), Consumer(error))
     }
 
-    fun reply(type : MessageType, title: String, description: String, success: Consumer<in Message> = Consumer { }, error: Consumer<in Throwable> = Consumer { }) {
-        messageReceivedEvent.message.channel.sendMessage(EmbedFactory.getEmbed(type, title, description)).queue(success, error)
+    fun reply(type : MessageType, title: String, description: String, success: (Message) -> Unit = { }, error: (Throwable) -> Unit = { }) {
+        messageReceivedEvent.message.channel.sendMessage(EmbedFactory.getEmbed(type, title, description)).queue(Consumer(success), Consumer(error))
     }
 
-    fun edit(newMessage: MessageEmbed, success: Consumer<in Message> = Consumer { }, error: Consumer<in Throwable> = Consumer { }) {
-        messageReceivedEvent.message.editMessage(newMessage).queue(success, error)
+    fun edit(newMessage: MessageEmbed, success: (Message) -> Unit = { }, error: (Throwable) -> Unit = { }) {
+        messageReceivedEvent.message.editMessage(newMessage).queue(Consumer(success), Consumer(error))
     }
 
-    fun edit(newMessage: String, success: Consumer<in Message> = Consumer { }, error: Consumer<in Throwable> = Consumer { }) {
-        messageReceivedEvent.message.editMessage(newMessage).queue(success, error)
+    fun edit(newMessage: String, success: (Message) -> Unit = { }, error: (Throwable) -> Unit = { }) {
+        messageReceivedEvent.message.editMessage(newMessage).queue(Consumer(success), Consumer(error))
     }
 
     override fun getResponseNumber(): Long {

@@ -1,17 +1,13 @@
 package com.terrastudios.tsbot.commands.dev
 
-import club.minnced.jda.reactor.ReactiveEventManager
 import com.terrastudios.tsbot.TSBot
 import com.terrastudios.tsbot.core.commands.annotations.DiscordCommand
 import com.terrastudios.tsbot.core.events.CommandEvent
-import com.terrastudios.tsbot.core.events.MessageEvent
 import com.terrastudios.tsbot.core.events.extensions.edit
 import com.terrastudios.tsbot.core.util.MessageType
 import net.dv8tion.jda.api.Permission
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import net.steppschuh.markdowngenerator.table.Table
 import org.jpaste.pastebin.Pastebin
-import java.util.function.Consumer
 
 
 /**
@@ -26,7 +22,7 @@ class FetchAllCommandDataCommand {
         permission = Permission.ADMINISTRATOR
     )
     fun fetchAllCommandData(event: CommandEvent) {
-        event.reply(MessageType.WARNING, "Command Data", "Fetching..", Consumer {
+        event.reply(MessageType.WARNING, "Command Data", "Fetching..",  {
 
             val builder = Table.Builder()
                 .withAlignment(Table.ALIGN_CENTER)

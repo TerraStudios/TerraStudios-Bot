@@ -7,7 +7,6 @@ import com.terrastudios.tsbot.core.events.extensions.edit
 import com.terrastudios.tsbot.core.util.MessageType
 import org.jpaste.pastebin.Pastebin
 import java.time.ZoneId
-import java.util.function.Consumer
 
 class TimeListCommand {
 
@@ -19,7 +18,7 @@ class TimeListCommand {
     )
     fun listTime(event: CommandEvent) {
         try {
-            event.reply(MessageType.WARNING, "TimeZone Regions", "Fetching...", Consumer {
+            event.reply(MessageType.WARNING, "TimeZone Regions", "Fetching...",  {
                 val link = Pastebin.pastePaste(
                     TSBot.config.pastebinDevKey,
                     ZoneId.getAvailableZoneIds().joinToString("\n", "Available TimeZone Regions")

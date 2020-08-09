@@ -6,7 +6,6 @@ import com.terrastudios.tsbot.core.events.MessageEvent
 import com.terrastudios.tsbot.core.util.MessageType
 import com.terrastudios.tsbot.core.util.extensions.EmbedFactory
 import net.dv8tion.jda.api.Permission
-import java.util.function.Consumer
 
 class SendEmbedCommand {
 
@@ -17,16 +16,16 @@ class SendEmbedCommand {
         permission = Permission.ADMINISTRATOR
     )
     fun sendEmbed(event: CommandEvent) {
-        event.reply(MessageType.INFO, "Embed Builder", "What channel would you like to send the embed to?", Consumer {
+        event.reply(MessageType.INFO, "Embed Builder", "What channel would you like to send the embed to?",  {
             event.listener.listen<MessageEvent>({ e -> e.author == event.author && e.message.channel == event.message.channel && e.message != event.message}, {
                 e ->
                 val text = e.text
                 val channel = event.jda.getTextChannelById(text.replace("[\\\\<>@#&!]".toRegex(), ""))
-                e.reply(MessageType.INFO, "Embed Builder", "What would you like the title of the embed to be?", Consumer {
+                e.reply(MessageType.INFO, "Embed Builder", "What would you like the title of the embed to be?",  {
                     event.listener.listen<MessageEvent>({ e -> e.author == event.author && e.message.channel == event.message.channel && e.message != event.message }, {
                         e ->
                         val title = e.text
-                        e.reply(MessageType.INFO, "Embed Builder", "What would you like the description to be?", Consumer {
+                        e.reply(MessageType.INFO, "Embed Builder", "What would you like the description to be?",  {
                             event.listener.listen<MessageEvent>({ e -> e.author == event.author && e.message.channel == event.message.channel && e.message != event.message }, {
                                 e ->
                                 val description = e.text
