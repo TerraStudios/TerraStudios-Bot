@@ -3,9 +3,11 @@ package com.terrastudios.tsbot.commands
 import com.terrastudios.tsbot.TSBot
 import com.terrastudios.tsbot.core.commands.annotations.DiscordCommand
 import com.terrastudios.tsbot.core.events.CommandEvent
+import com.terrastudios.tsbot.core.events.MessageEvent
 import com.terrastudios.tsbot.core.util.MessageType
 import com.terrastudios.tsbot.core.util.extensions.EmbedFactory
 import net.dv8tion.jda.api.entities.Role
+import java.util.function.Consumer
 import java.util.stream.Collectors
 
 class InfoCommand {
@@ -21,6 +23,8 @@ class InfoCommand {
         "**Member Count**: ${event.message.guild.memberCount}\n\n" +
              "**Channel Count**: ${event.message.guild.channels.size}\n\n" +
              "**Role List:** `${together}`")
+
+
     }
 
 

@@ -4,6 +4,7 @@ import com.terrastudios.tsbot.TSBot
 import com.terrastudios.tsbot.core.commands.annotations.DiscordCommand
 import com.terrastudios.tsbot.core.data.CustomCommand
 import com.terrastudios.tsbot.core.events.CommandEvent
+import com.terrastudios.tsbot.core.events.listener.EventListener
 import com.terrastudios.tsbot.core.events.extensions.reply
 import com.terrastudios.tsbot.core.util.MessageType
 import com.terrastudios.tsbot.core.util.extensions.EmbedFactory
@@ -29,12 +30,15 @@ class CommandHandler : ListenerAdapter() {
 
     init {
         TSBot.commandHandler = this
+
         println("Starting annotation scanning..")
         val reflections = Reflections(
             ConfigurationBuilder()
                 .setUrls(ClasspathHelper.forJavaClassPath())
                 .setScanners(MethodAnnotationsScanner())
         )
+
+
 
         val methods = reflections.getMethodsAnnotatedWith(DiscordCommand::class.java)
         println("Done! Found ${methods.size} DiscordCommand annotations.")
@@ -79,7 +83,7 @@ class CommandHandler : ListenerAdapter() {
                             }
 
                             val instance = cachedClasses[clazz]
-                            commandMap[command]!!.invoke(instance, CommandEvent(event, args))
+                            commandMap[command]!!.invoke(instance, CommandEvent(TSBot.listener, event, args))
                         } else {
                             event.reply(EmbedFactory.getEmbed(MessageType.ERROR, "Too many arguments", "Usage: ${TSBot.config.prefix}${anno.usage}"))
                         }

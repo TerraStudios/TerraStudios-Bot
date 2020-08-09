@@ -1,15 +1,16 @@
 package com.terrastudios.tsbot.commands.dev
 
-import com.sun.org.apache.bcel.internal.generic.TABLESWITCH
+import club.minnced.jda.reactor.ReactiveEventManager
 import com.terrastudios.tsbot.TSBot
 import com.terrastudios.tsbot.core.commands.annotations.DiscordCommand
 import com.terrastudios.tsbot.core.events.CommandEvent
+import com.terrastudios.tsbot.core.events.MessageEvent
 import com.terrastudios.tsbot.core.events.extensions.edit
 import com.terrastudios.tsbot.core.util.MessageType
 import net.dv8tion.jda.api.Permission
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import net.steppschuh.markdowngenerator.table.Table
 import org.jpaste.pastebin.Pastebin
-import java.time.ZoneId
 import java.util.function.Consumer
 
 
@@ -31,8 +32,8 @@ class FetchAllCommandDataCommand {
                 .withAlignment(Table.ALIGN_CENTER)
                 .addRow("Command Name", "Description", "Usage")
 
-            TSBot.commandHandler.commandMap.values.forEach {
-                val annotation = it.getAnnotation(DiscordCommand::class.java)
+            TSBot.commandHandler.commandMap.values.forEach { command ->
+                val annotation = command.getAnnotation(DiscordCommand::class.java)
 
                 builder.addRow(annotation.commandName, annotation.description, annotation.usage)
             }
@@ -44,6 +45,7 @@ class FetchAllCommandDataCommand {
                 builder.build().toString()
             )
             it.edit(MessageType.INFO, "Command Data", "$link")
+
         })
     }
 
