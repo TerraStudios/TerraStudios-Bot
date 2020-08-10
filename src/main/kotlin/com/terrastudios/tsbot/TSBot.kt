@@ -33,7 +33,7 @@ class TSBot {
     private fun registerEvents() {
         api.addEventListener(commandHandler)
         api.addEventListener(listener)
-        //api.addEventListener(CodeListener())
+        api.addEventListener(CodeListener())
     }
 }
 
