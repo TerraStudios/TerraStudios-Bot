@@ -22,7 +22,7 @@ class FetchAllCommandDataCommand {
         permission = Permission.ADMINISTRATOR
     )
     fun fetchAllCommandData(event: CommandEvent) {
-        event.reply(MessageType.WARNING, "Command Data", "Fetching..",  {
+        event.reply(MessageType.WARNING, "Command Data", "Fetching..", {
 
             val builder = Table.Builder()
                 .withAlignment(Table.ALIGN_CENTER)
@@ -35,12 +35,23 @@ class FetchAllCommandDataCommand {
             }
 
 
+            try {
+                val link = Pastebin.pastePaste(
+                    TSBot.config.pastebinDevKey,
+                    builder.build().toString()
+                )
 
-            val link = Pastebin.pastePaste(
-                TSBot.config.pastebinDevKey,
-                builder.build().toString()
-            )
-            it.edit(MessageType.INFO, "Command Data", "$link")
+                it.edit(MessageType.INFO, "Command Data", "$link")
+            } catch (e: Exception) {
+                it.edit(
+                    MessageType.ERROR,
+                    "Command Data",
+                    "An exception occured while sending a POST request to pastebin.\n\n**Error:** ${e.message}"
+                )
+
+                println(builder.build())
+            }
+
 
         })
     }
