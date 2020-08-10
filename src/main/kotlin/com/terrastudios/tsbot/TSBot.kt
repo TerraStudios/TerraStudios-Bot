@@ -7,6 +7,7 @@ import com.terrastudios.tsbot.core.util.ResourceUtils
 import com.terrastudios.tsbot.events.CodeListener
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder
+import net.dv8tion.jda.api.entities.Activity
 
 fun main() {
     TSBot()
