@@ -14,6 +14,8 @@ import java.util.function.Consumer
 class CommandEvent(listener: EventListener, messageReceivedEvent: MessageReceivedEvent, val args : Array<String>) :
     MessageEvent(listener, messageReceivedEvent) {
 
+    override val text = args.joinToString(" ")
+
     override fun getResponseNumber(): Long {
         return 3
     }

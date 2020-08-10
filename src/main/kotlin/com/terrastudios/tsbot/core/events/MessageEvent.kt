@@ -12,7 +12,7 @@ import java.util.function.Consumer
 
 open class MessageEvent(val listener: EventListener, val messageReceivedEvent : MessageReceivedEvent): GenericEvent {
     val message = messageReceivedEvent.message
-    val text = message.contentRaw
+    open val text = message.contentRaw
 
     val author = messageReceivedEvent.author
     val jda = messageReceivedEvent.jda

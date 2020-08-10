@@ -4,6 +4,7 @@ import com.terrastudios.tsbot.core.commands.CommandHandler
 import com.terrastudios.tsbot.core.data.BotConfig
 import com.terrastudios.tsbot.core.events.listener.EventListener
 import com.terrastudios.tsbot.core.util.ResourceUtils
+import com.terrastudios.tsbot.events.CodeListener
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder
 
@@ -32,6 +33,7 @@ class TSBot {
     private fun registerEvents() {
         api.addEventListener(commandHandler)
         api.addEventListener(listener)
+        //api.addEventListener(CodeListener())
     }
 }
 
