@@ -35,3 +35,5 @@ The following steps are needed in order to properly setup the bot:
 |      commands       |           Lists all of the commands for the bot.            |                                   commands                                   |
 |        info         |            Displays information about the server            |                                     info                                     |
 
+# Questions?
+If you have any questions or you would like to try out the bot, join our server: https://discord.gg/F5rnvDu
